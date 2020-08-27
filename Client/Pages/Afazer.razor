@@ -1,0 +1,51 @@
+@page "/afazer"
+
+<Container>
+    <Addons>
+    <Addon AddonType="AddonType.Body">
+        <TextEdit Placeholder="A fazer" @bind-Text="novoAfazer" />
+    </Addon>
+    <Addon AddonType="AddonType.End">
+        <Button Color="Color.Primary" @onclick="AddTarefa">Add</Button>
+    </Addon>
+    </Addons>
+    <Table>
+        <TableHeader>
+
+        </TableHeader>
+        <TableBody>
+            @foreach (var item in listaAfazer)
+                {
+                    <TableRow>
+                        <Check TValue="bool" @bind-Checked="@item.Feito">@item.Titulo</Check>
+                        <TableRowCell>@item.Feito</TableRowCell>
+                    </TableRow>
+                }    
+        </TableBody>
+    </Table>
+</Container>
+
+
+@code {
+
+
+    List<Afazeres> listaAfazer;
+
+    public string novoAfazer { get; set; }
+
+    private void AddTarefa()
+    {
+        listaAfazer.Add(new Afazeres {Titulo = novoAfazer});
+    }
+
+    protected override void OnInitialized()
+    {
+        listaAfazer = new List<Afazeres>(){
+            new Afazeres(){Titulo = "Andar com o Cachorro", Feito = false},
+            new Afazeres(){Titulo = "Comprar coisas", Feito = false},
+            new Afazeres(){Titulo = "Pagar Conta", Feito = true},
+        };
+    }
+
+
+}
